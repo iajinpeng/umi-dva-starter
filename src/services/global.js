@@ -4,7 +4,7 @@
 import request from '../utils/request'
 
 export async function getUser() {
-  return request('/user', {
-    method: 'post'
+  return request('/api/users', {
+    method: 'get'
   })
 }
