@@ -18,5 +18,12 @@ export default {
       return yield call(services.getUser);
     },
 
+    *saveUser({ payload }, { call }) {
+      return yield call(services.saveUser, payload);
+    },
+
+    *delUser({ payload }, { call }) {
+      return yield call(services.delUser, payload);
+    }
   }
 }

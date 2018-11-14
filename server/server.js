@@ -20,7 +20,7 @@ router.use((req, res, next) => {
   // 把它交给下一个中间件，注意中间件的注册顺序是按序执行
   next();
 })
-// 获取用户列表信息的路由
+// 获取用户列表信息
 router.get('/users', (req, res) => {
   User.find({}, (err, data) => {
     if (err) next(err);
@@ -28,10 +28,38 @@ router.get('/users', (req, res) => {
   });
 });
 
+//新增用户
+router.post('/save-user', (req, res) => {
+  let user = new User(req.body);
+  user.save((err, user) => {
+    if (err) {
+      return console.error(err);
+    } else {
+      res.json({
+        status: 1,
+        msg: '保存成功'
+      })
+    }
+  })
+})
+
+router.post('/del-user', (req, res) => {
+  User.remove({_id: req.body.id}, (err, response) => {
+    if (err) {
+      console.error(err)
+    } else {
+      res.json({
+        status: 1,
+        msg: '删除成功'
+      })
+    }
+  })
+})
+
 // 所有的路由会加上“／api”前缀
 app.use('/api', router); //添加router中间件
 
 // express 自动帮我们创建一个server，封装的node底层http
 app.listen(3004, () => {
-  console.log('node server is listening 3003');
+  console.log('node server is listening 3004');
 });
